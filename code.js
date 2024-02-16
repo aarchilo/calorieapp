@@ -1,4 +1,3 @@
-console.log("hello");
 var result = document.getElementById("result");
 
 function calculate() {
@@ -6,7 +5,7 @@ function calculate() {
     var he= document.getElementById("hh").value;
     var ic= document.getElementById("ii").value;
     var w=ic/12;
-   
+   if(wh && he&& ic){
 var m = (he+ic) * 0.3048;
     let bmi = wh / (m * m)*(100000) ;
 if (bmi < 18.6) result.innerHTML =
@@ -19,12 +18,16 @@ result.innerHTML =
 else 
 result.innerHTML =
 `<h4 style="color:red;">Over Weight<h4> : <span>${bmi}</span>`;
-   
+   }
+   else
+   {
+    alert('Enter the valid weight,height,inches')
+   }
 }
 function find() {
     var m=document.getElementById("mid");
 var p=document.getElementById("ii").value;
-
+m.innerHTML='<p>Loading...</p>'
 var b=document.getElementById("ii1").value;
     fetch(`https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition?query=%20${b}%20${p}`, {
         "method": "GET",
@@ -45,23 +48,32 @@ var b=document.getElementById("ii1").value;
 
 }  
 var k=document.getElementById("ii2").value;
-async function fetchAPI(k) {
+async function fetchAPI() {
+    var k=document.getElementById("ii2").value;
+    console.log(k,'hiii')
+    if(k)
+    {
     const baseURL = `https://api.edamam.com/search?q=${k}&app_id=375afcf3&app_key=
   4e86a684782953065557c1d5efa49e2e	&from=0&to=10`;
     const response = await fetch(baseURL);
     const data = await response.json();
     generateHTML(data.hits);
+    }
+    else
+    {
+        alert('Enter food item')
+    }
  
 } 
 let recipe = document.getElementById("recipe");
 function generateHTML(results) {
-
+    recipe.innerHTML='<p>Loading..</p>'
     let generatedHTML = "";
     results.map((result) => {
         generatedHTML += `
       <div class="item">
     <div id="a">
-        <img src="${result.recipe.image}"class="im"style=" border:2px solid #24A19C;">
+        <img src="${result.recipe.image}"class="im"style=" border:2px solid #24A19C;width:200px">
     </div>
     <div id="b"style="color:#24A19C; ">
           <h1 class="lead"style="color:#24A19C;" text-align:center ">${result.recipe.label}</h1>
@@ -80,16 +92,37 @@ var news=document.getElementById("news");
 var a=0;
 function find1()
 {
+    document.getElementById("news").style.color = "#097c79";
+    if(a<=10)
 a=a+1;
 news.innerHTML=`you have ${a} glass of water..keep it up`;
-if(a>=8)
+if(a==0)
+    {
+       
+        news.innerHTML=`Buck up! your body needs water`
+    }
+   else if(a>=10)
 {
+    document.getElementById("news").style.color = "red";
+
+    news.innerHTML=`you did complete the water limit! Excess of it can cause potential health risk`; 
+}
+else if(a>=8)
+{
+   
+
     news.innerHTML=`congo! ${a} glass completed.`; 
 }
+
 }
 function find2()
 {
-    if(a>0)
+    document.getElementById("news").style.color = "#097c79";
+    if(a==0)
+    {
+        news.innerHTML=`Buck up! your body needs water`
+    }
+    else if(a>0)
     {
     a=a-1;
     news.innerHTML=`you have ${a} glass of water.. `;
