@@ -1,29 +1,28 @@
-var result = document.getElementById("result");
+
 
 function calculate() {
-    var wh= document.getElementById("ww").value;
-    var he= document.getElementById("hh").value;
-    var ic= document.getElementById("ii").value;
-    var w=ic/12;
-   if(wh && he&& ic){
-var m = (he+ic) * 0.3048;
-    let bmi = wh / (m * m)*(100000) ;
-if (bmi < 18.6) result.innerHTML =
-`<h4 style="color:red;">Under Weight <h4><span>${bmi}</span>`;
+    event.preventDefault();
+    var wh = parseFloat(document.getElementById("ww").value);
+    var he = parseFloat(document.getElementById("hh").value);
+    var ic = parseFloat(document.getElementById("ii").value);
+    var result = document.getElementById("result");
 
-else if (bmi >= 18.6 && bmi < 24.9) 
-result.innerHTML = 
-`<h4 style="color:blue;">Normal <h4> <span>${bmi}</span>`;
+    if (wh && he && ic) {
+        var totalHeightMeters = (he * 0.3048) + (ic * 0.0254); // Convert feet & inches to meters
+        let bmi = wh / (totalHeightMeters * totalHeightMeters); // Correct BMI formula
 
-else 
-result.innerHTML =
-`<h4 style="color:red;">Over Weight<h4> : <span>${bmi}</span>`;
-   }
-   else
-   {
-    alert('Enter the valid weight,height,inches')
-   }
+        if (bmi < 18.6) {
+            result.innerHTML = `<h4 style="color:red;">Underweight</h4><span>${bmi.toFixed(2)}</span>`;
+        } else if (bmi >= 18.6 && bmi < 24.9) {
+            result.innerHTML = `<h4 style="color:blue;">Normal</h4> <span>${bmi.toFixed(2)}</span>`;
+        } else {
+            result.innerHTML = `<h4 style="color:red;">Overweight</h4> <span>${bmi.toFixed(2)}</span>`;
+        }
+    } else {
+        alert('Enter a valid weight, height, and inches');
+    }
 }
+
 function find() {
     var m=document.getElementById("mid");
 var p=document.getElementById("ii").value;
